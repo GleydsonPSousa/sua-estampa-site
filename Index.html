@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sua Estampa Confecção | Estamparia Profissional em SJC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        :root { scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .gradient-bg { background: radial-gradient(circle at top right, #1e293b, #0f172a); }
+        .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
+        .card-shadow { transition: all 0.3s ease; border: 1px solid rgba(226, 232, 240, 0.8); }
+        .card-shadow:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border-color: #2563eb; }
+        .floating-whatsapp { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-900">
+
+    <!-- WhatsApp Flutuante -->
+    <a href="https://wa.me/5512999999999" target="_blank" class="floating-whatsapp fixed bottom-6 right-6 bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl z-50 transition-transform hover:scale-110">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+
+    <!-- Menu -->
+    <nav class="fixed w-full z-40 glass-nav border-b border-slate-100">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <i class="fas fa-shirt text-white"></i>
+                </div>
+                <span class="text-xl font-extrabold tracking-tighter">SUA ESTAMPA</span>
+            </div>
+            <a href="https://wa.me/5512999999999" class="bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-bold">ORÇAMENTO</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="pt-32 pb-20 gradient-bg text-white">
+        <div class="container mx-auto px-6 text-center">
+            <span class="bg-blue-500/20 text-blue-300 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Estamparia em São José dos Campos</span>
+            <h1 class="text-4xl md:text-6xl font-extrabold mt-6 mb-6 leading-tight">Vista a sua marca com <br><span class="text-blue-400">qualidade premium.</span></h1>
+            <p class="text-slate-400 max-w-2xl mx-auto mb-10">Uniformes corporativos, coleções de moda e eventos. O melhor acabamento em DTF e Silk Screen da região.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="https://wa.me/5512999999999" class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-2xl font-bold text-lg transition shadow-xl">Solicitar Catálogo</a>
+                <a href="#portfolio" class="bg-white/10 hover:bg-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition">Ver Trabalhos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços -->
+    <section class="py-20 bg-slate-50">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-3xl card-shadow">
+                    <i class="fas fa-bolt text-blue-600 text-3xl mb-6"></i>
+                    <h3 class="text-xl font-bold mb-3">Impressão DTF</h3>
+                    <p class="text-slate-500 text-sm">Cores vibrantes e detalhes incríveis. Ideal para fotos e logos complexos em qualquer tecido.</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl card-shadow">
+                    <i class="fas fa-tint text-blue-600 text-3xl mb-6"></i>
+                    <h3 class="text-xl font-bold mb-3">Silk Screen</h3>
+                    <p class="text-slate-500 text-sm">Durabilidade extrema para grandes tiragens. A técnica clássica com tintas de alta performance.</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl card-shadow">
+                    <i class="fas fa-user-tie text-blue-600 text-3xl mb-6"></i>
+                    <h3 class="text-xl font-bold mb-3">Uniformes</h3>
+                    <p class="text-slate-500 text-sm">Modelagens exclusivas para empresas que buscam profissionalismo e conforto para a equipa.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfólio Simples -->
+    <section id="portfolio" class="py-20 bg-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-extrabold mb-12">Nossas Produções</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=400" class="rounded-2xl shadow-lg aspect-square object-cover" alt="Trabalho 1">
+                <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=400" class="rounded-2xl shadow-lg aspect-square object-cover" alt="Trabalho 2">
+                <img src="https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=400" class="rounded-2xl shadow-lg aspect-square object-cover" alt="Trabalho 3">
+                <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400" class="rounded-2xl shadow-lg aspect-square object-cover" alt="Trabalho 4">
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="py-20 gradient-bg text-white text-center">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-6">Pronto para vestir a sua ideia?</h2>
+            <p class="text-slate-400 mb-8">Atendimento rápido em SJC. Clique no botão abaixo e fale connosco.</p>
+            <a href="https://wa.me/5512999999999" class="bg-green-500 hover:bg-green-600 px-10 py-5 rounded-2xl font-bold text-xl inline-flex items-center shadow-2xl">
+                <i class="fab fa-whatsapp mr-3"></i> Orçar no WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <footer class="py-10 bg-white border-t border-slate-100 text-center">
+        <p class="text-slate-400 text-xs">© 2026 Sua Estampa Confecção - São José dos Campos, SP.</p>
+    </footer>
+
+</body>
+</html>
+
