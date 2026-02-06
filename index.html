@@ -1,27 +1,30 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sua Estampa Confecção | Excelência em Estamparia SJC</title>
+    <title>Sua Estampa Confecção | Premium SJC</title>
+    <!-- Tailwind CSS para Design Moderno -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fontes e Ícones -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Animações AOS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
         
         :root { scroll-behavior: smooth; }
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background-color: #f8fafc;
+            overflow-x: hidden;
         }
         
         .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .text-gradient {
@@ -30,171 +33,128 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .hero-gradient {
-            background: radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 100% 100%, rgba(30, 41, 59, 0.05) 0%, transparent 50%);
+        .btn-premium {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .card-premium {
-            background: white;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(226, 232, 240, 0.5);
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);
         }
 
-        .card-premium:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
-            border-color: #3b82f6;
+        .status-card {
+            display: none;
+            animation: slideUp 0.5s ease-out forwards;
         }
 
-        .search-box {
-            box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.2);
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .floating {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .custom-loader {
+        /* Loader customizado */
+        .loader {
             width: 20px;
             height: 20px;
             border: 3px solid #FFF;
             border-bottom-color: transparent;
             border-radius: 50%;
-            display: inline-block;
-            box-sizing: border-box;
+            display: none;
             animation: rotation 1s linear infinite;
         }
 
-        @keyframes rotation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="hero-gradient">
+<body>
 
-    <!-- Navbar -->
-    <nav class="fixed w-full z-[100] glass transition-all duration-300">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center space-x-3 group">
-                <div class="bg-blue-600 p-2.5 rounded-2xl group-hover:rotate-12 transition-transform duration-300">
-                    <i class="fas fa-shirt text-white text-xl"></i>
+    <!-- Header / Navbar -->
+    <nav class="fixed w-full z-[100] glass py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-blue-600 p-2 rounded-xl text-white">
+                    <i class="fas fa-shirt text-lg"></i>
                 </div>
                 <div class="flex flex-col">
-                    <span class="text-xl font-extrabold tracking-tighter text-slate-900 leading-none">SUA ESTAMPA</span>
-                    <span class="text-[10px] font-bold text-blue-600 tracking-[0.2em] uppercase">SJC • Premium</span>
+                    <span class="text-lg font-extrabold text-slate-900 leading-none">SUA ESTAMPA</span>
+                    <span class="text-[9px] font-bold text-blue-600 tracking-widest uppercase">SJC • PREMIUM</span>
                 </div>
-            </a>
-            
-            <div class="hidden lg:flex items-center space-x-10">
-                <a href="#inicio" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">Início</a>
-                <a href="#rastreio" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">Rastreio</a>
-                <a href="#diferenciais" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">Diferenciais</a>
-                <a href="#servicos" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">Serviços</a>
             </div>
-
-            <a href="https://wa.me/5512999999999" class="bg-slate-900 text-white px-7 py-3 rounded-2xl text-sm font-bold hover:bg-blue-600 shadow-lg shadow-slate-200 transition-all active:scale-95">
-                ORÇAMENTO <i class="fab fa-whatsapp ml-2 text-lg"></i>
+            <a href="https://wa.me/5512999999999" class="bg-slate-900 text-white px-5 py-2.5 rounded-xl text-xs font-bold btn-premium">
+                ORÇAMENTO <i class="fab fa-whatsapp ml-1"></i>
             </a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="inicio" class="pt-48 pb-32 px-6">
-        <div class="container mx-auto flex flex-col items-center text-center">
-            <div data-aos="fade-up" class="inline-flex items-center space-x-2 bg-blue-50 border border-blue-100 px-4 py-2 rounded-full mb-8">
+    <section class="pt-32 pb-20 px-6">
+        <div class="container mx-auto text-center">
+            <div data-aos="fade-down" class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest mb-8 border border-blue-100">
                 <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                 </span>
-                <span class="text-blue-700 text-[11px] font-bold uppercase tracking-widest">Produção em São José dos Campos</span>
+                Produção Própria em São José dos Campos
             </div>
             
-            <h1 data-aos="fade-up" data-aos-delay="100" class="text-5xl md:text-7xl font-extrabold text-slate-900 mb-8 leading-[1.1] tracking-tight">
-                Identidade que se veste <br>
-                <span class="text-gradient">Qualidade que se sente.</span>
+            <h1 data-aos="fade-up" class="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 leading-tight">
+                A sua marca com <br><span class="text-gradient">qualidade impecável.</span>
             </h1>
             
-            <p data-aos="fade-up" data-aos-delay="200" class="text-slate-500 text-lg md:text-xl max-w-2xl mb-12 font-medium leading-relaxed">
-                Especialistas em confecção e estamparia para marcas de moda, eventos e empresas que não abrem mão da perfeição.
+            <p data-aos="fade-up" data-aos-delay="100" class="text-slate-500 text-base md:text-lg max-w-xl mx-auto mb-10 leading-relaxed">
+                Especialistas em DTF, Silk Screen e Uniformes Corporativos. Tecnologia de ponta para resultados extraordinários.
             </p>
 
-            <div data-aos="fade-up" data-aos-delay="300" class="flex flex-col sm:flex-row gap-5">
-                <a href="#rastreio" class="bg-blue-600 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-blue-700 hover:shadow-2xl hover:shadow-blue-200 transition-all flex items-center justify-center group">
-                    Rastrear Pedido <i class="fas fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
-                </a>
-                <a href="https://wa.me/5512999999999" class="bg-white text-slate-700 border border-slate-200 px-10 py-5 rounded-2xl font-bold text-lg hover:bg-slate-50 transition-all">
-                    Ver Catálogo
-                </a>
+            <div data-aos="fade-up" data-aos-delay="200" class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#rastreio" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg btn-premium">Acompanhar Pedido</a>
+                <a href="#servicos" class="bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-2xl font-bold btn-premium">Nossos Serviços</a>
             </div>
         </div>
     </section>
 
-    <!-- Rastreio Inteligente -->
-    <section id="rastreio" class="py-24 bg-white relative">
+    <!-- Rastreio de Pedidos (A parte que você mais precisa) -->
+    <section id="rastreio" class="py-20 bg-white">
         <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto bg-slate-50 rounded-[3rem] p-8 md:p-16 border border-slate-100 overflow-hidden relative">
-                <div class="absolute top-0 right-0 p-12 opacity-5">
-                    <i class="fas fa-search text-9xl text-slate-900"></i>
+            <div class="max-w-3xl mx-auto bg-slate-50 rounded-[2.5rem] p-8 md:p-12 border border-slate-100 shadow-sm">
+                <div class="text-center md:text-left mb-10">
+                    <h2 class="text-2xl font-extrabold text-slate-900 mb-2">Consulta de Produção</h2>
+                    <p class="text-slate-500 text-sm">Insira o código enviado pela nossa equipa para ver o status.</p>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-3 bg-white p-2 rounded-3xl shadow-md border border-slate-100 mb-6">
+                    <div class="flex-1 flex items-center px-4 py-2">
+                        <i class="fas fa-search text-slate-300 mr-3"></i>
+                        <input type="text" id="inputProtocolo" placeholder="CÓDIGO (EX: SE-100)" 
+                               class="w-full bg-transparent outline-none font-bold text-slate-700 uppercase">
+                    </div>
+                    <button onclick="consultar()" id="btnConsultar" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold btn-premium flex items-center justify-center gap-2">
+                        <span id="labelBtn">BUSCAR</span>
+                        <div id="spinner" class="loader"></div>
+                    </button>
                 </div>
                 
-                <div class="relative z-10 text-center md:text-left">
-                    <div class="mb-12">
-                        <h2 class="text-3xl font-extrabold text-slate-900 mb-4">Acompanhamento Real-time</h2>
-                        <p class="text-slate-500 font-medium">Transparência total desde a arte final até o envio.</p>
-                    </div>
+                <p id="errorMsg" class="text-red-500 text-xs font-bold hidden mb-4 ml-2 italic">Protocolo não encontrado. Verifique e tente novamente.</p>
 
-                    <div class="flex flex-col md:flex-row gap-4 search-box bg-white p-3 rounded-3xl mb-8">
-                        <div class="flex-1 flex items-center px-4">
-                            <i class="fas fa-barcode text-slate-300 mr-4 text-xl"></i>
-                            <input type="text" id="inputProtocolo" placeholder="DIGITE SEU PROTOCOLO (EX: SE-001)" 
-                                   class="w-full py-4 text-slate-800 font-bold outline-none uppercase placeholder:text-slate-300">
+                <!-- Card de Resultado -->
+                <div id="statusResult" class="status-card bg-white border-2 border-blue-50 rounded-3xl p-6 md:p-8 mt-4 shadow-sm">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <p class="text-[10px] font-black text-blue-600 uppercase mb-1">Cliente</p>
+                            <h3 id="resNome" class="text-xl font-bold text-slate-800">---</h3>
                         </div>
-                        <button onclick="consultar()" id="btnConsultar" class="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black hover:bg-blue-700 transition flex items-center justify-center gap-3">
-                            <span id="labelBtn">BUSCAR STATUS</span>
-                            <div id="spinner" class="custom-loader hidden"></div>
-                        </button>
+                        <div class="bg-blue-50 text-blue-700 px-3 py-1 rounded-lg text-[10px] font-black" id="resId">---</div>
                     </div>
-                    
-                    <p id="errorMsg" class="text-red-500 text-sm font-bold hidden mb-4 ml-4"><i class="fas fa-exclamation-circle mr-2"></i> Ops! Protocolo não encontrado.</p>
 
-                    <!-- Resultado Estilizado -->
-                    <div id="statusResult" class="hidden animate-in fade-in slide-in-from-bottom-5 duration-500">
-                        <div class="bg-white border border-blue-100 rounded-[2.5rem] p-8 shadow-sm">
-                            <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-xl">
-                                        <i class="fas fa-user"></i>
-                                    </div>
-                                    <div>
-                                        <h4 id="resNome" class="text-xl font-extrabold text-slate-900 leading-none">---</h4>
-                                        <p id="resProtocolo" class="text-xs font-bold text-blue-500 mt-1 uppercase tracking-tighter">---</p>
-                                    </div>
-                                </div>
-                                <div class="px-6 py-2 bg-blue-50 rounded-full">
-                                    <p id="resStatus" class="text-blue-700 font-black text-xs uppercase tracking-widest">---</p>
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                <div class="p-6 bg-slate-50 rounded-2xl">
-                                    <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Previsão Estimada</p>
-                                    <div class="flex items-center gap-3">
-                                        <i class="fas fa-calendar-alt text-blue-600"></i>
-                                        <p id="resPrevisao" class="text-xl font-extrabold text-slate-800">---</p>
-                                    </div>
-                                </div>
-                                <div class="p-6 bg-slate-50 rounded-2xl flex items-center justify-center">
-                                    <a href="https://wa.me/5512999999999" class="text-blue-600 font-bold hover:underline">Precisa alterar algo?</a>
-                                </div>
-                            </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-4 bg-slate-50 rounded-2xl">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">Status Atual</span>
+                            <p id="resStatus" class="text-blue-600 font-extrabold text-lg flex items-center gap-2 mt-1">
+                                <i class="fas fa-clock"></i> ---
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-2xl">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">Previsão de Entrega</span>
+                            <p id="resPrevisao" class="text-slate-800 font-extrabold text-lg mt-1">---</p>
                         </div>
                     </div>
                 </div>
@@ -202,133 +162,104 @@
         </div>
     </section>
 
-    <!-- Diferenciais -->
-    <section id="diferenciais" class="py-24">
+    <!-- Serviços Grid -->
+    <section id="servicos" class="py-20">
         <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 data-aos="fade-up" class="text-3xl font-extrabold text-slate-900 mb-4">Padrão Sua Estampa</h2>
-                <p data-aos="fade-up" data-aos-delay="100" class="text-slate-500 font-medium">Por que somos a escolha número 1 em SJC?</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div data-aos="fade-up" data-aos-delay="0" class="card-premium p-8 rounded-[2.5rem] text-center">
-                    <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-microchip text-2xl"></i>
+            <h2 class="text-center text-3xl font-extrabold text-slate-900 mb-16">O que fazemos de melhor</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 hover:border-blue-200 transition-colors shadow-sm">
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-layer-group"></i>
                     </div>
-                    <h3 class="font-bold text-slate-900 mb-3 text-lg">Tecnologia</h3>
-                    <p class="text-slate-500 text-sm">Maquinário japonês de última geração para DTF e Silk Screen.</p>
+                    <h3 class="font-bold text-slate-900 mb-3">DTF Premium</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Impressão vibrante com toque suave, ideal para pequenas e médias tiragens com cores ilimitadas.</p>
                 </div>
-                <div data-aos="fade-up" data-aos-delay="100" class="card-premium p-8 rounded-[2.5rem] text-center">
-                    <div class="w-16 h-16 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-leaf text-2xl"></i>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 hover:border-blue-200 transition-colors shadow-sm">
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-fill-drip"></i>
                     </div>
-                    <h3 class="font-bold text-slate-900 mb-3 text-lg">Sustentável</h3>
-                    <p class="text-slate-500 text-sm">Tintas biodegradáveis e processos com zero desperdício.</p>
+                    <h3 class="font-bold text-slate-900 mb-3">Silk Screen</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">A técnica clássica para grandes volumes com a maior durabilidade do mercado.</p>
                 </div>
-                <div data-aos="fade-up" data-aos-delay="200" class="card-premium p-8 rounded-[2.5rem] text-center">
-                    <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-tachometer-alt text-2xl"></i>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 hover:border-blue-200 transition-colors shadow-sm">
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-briefcase"></i>
                     </div>
-                    <h3 class="font-bold text-slate-900 mb-3 text-lg">Velocidade</h3>
-                    <p class="text-slate-500 text-sm">Logística otimizada para entrega em tempo recorde.</p>
-                </div>
-                <div data-aos="fade-up" data-aos-delay="300" class="card-premium p-8 rounded-[2.5rem] text-center">
-                    <div class="w-16 h-16 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-gem text-2xl"></i>
-                    </div>
-                    <h3 class="font-bold text-slate-900 mb-3 text-lg">Curadoria</h3>
-                    <p class="text-slate-500 text-sm">Suporte técnico na escolha dos melhores tecidos e artes.</p>
+                    <h3 class="font-bold text-slate-900 mb-3">Uniformes</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Linha corporativa completa, desde o design até a entrega final para a sua empresa.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Serviços -->
-    <section id="servicos" class="py-24 bg-slate-900 text-white rounded-[4rem] mx-6 mb-24 overflow-hidden relative">
-        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-            <div class="absolute top-0 right-0 w-1/2 h-full bg-blue-600 blur-[150px]"></div>
-        </div>
-        
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-black mb-4">Nossas Especialidades</h2>
-                <p class="text-slate-400 font-medium italic">O que produzimos com paixão todos os dias.</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div class="flex flex-col md:flex-row gap-6 items-center p-8 bg-white/5 rounded-[3rem] border border-white/10">
-                    <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=400&h=400&auto=format&fit=crop" class="w-48 h-48 rounded-3xl object-cover shadow-2xl" alt="T-shirts">
-                    <div>
-                        <span class="text-blue-400 text-[10px] font-black tracking-widest uppercase">Moda & Coleções</span>
-                        <h3 class="text-2xl font-bold mt-2 mb-4">Camisaria Premium</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Modelagens exclusivas em algodão 30.1 penteado com acabamento de alfaiataria.</p>
-                        <a href="#" class="text-white font-bold text-xs flex items-center gap-2 hover:gap-4 transition-all">SABER MAIS <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <div class="flex flex-col md:flex-row gap-6 items-center p-8 bg-white/5 rounded-[3rem] border border-white/10">
-                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=400&h=400&auto=format&fit=crop" class="w-48 h-48 rounded-3xl object-cover shadow-2xl" alt="Workwear">
-                    <div>
-                        <span class="text-green-400 text-[10px] font-black tracking-widest uppercase">Corporativo</span>
-                        <h3 class="text-2xl font-bold mt-2 mb-4">Uniformes Tech</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Tecidos inteligentes com proteção UV e alta durabilidade para o dia a dia da empresa.</p>
-                        <a href="#" class="text-white font-bold text-xs flex items-center gap-2 hover:gap-4 transition-all">SABER MAIS <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-white pt-24 pb-12 border-t border-slate-100">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center space-x-3 mb-8">
-                        <div class="bg-blue-600 p-2 rounded-xl text-white">
-                            <i class="fas fa-shirt"></i>
-                        </div>
-                        <span class="text-2xl font-black text-slate-900 tracking-tighter uppercase">SUA ESTAMPA</span>
-                    </div>
-                    <p class="text-slate-500 max-w-sm mb-8 leading-relaxed font-medium">
-                        Mais que estampar tecidos, nós estampamos sonhos e construímos identidades visuais de impacto em São José dos Campos.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="font-black text-slate-900 mb-6 uppercase tracking-widest text-xs">Unidade SJC</h4>
-                    <ul class="space-y-4 text-sm text-slate-500 font-medium">
-                        <li class="flex items-start gap-3"><i class="fas fa-map-marker-alt text-blue-600 mt-1"></i> Rua das Indústrias, 450<br>São José dos Campos, SP</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-phone text-blue-600"></i> (12) 3999-9999</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-envelope text-blue-600"></i> contato@suaestampa.com</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-black text-slate-900 mb-6 uppercase tracking-widest text-xs">Horário</h4>
-                    <ul class="space-y-4 text-sm text-slate-500 font-medium">
-                        <li>Segunda a Sexta: 08:00 - 18:00</li>
-                        <li>Sábado: 08:00 - 12:00</li>
-                        <li class="text-green-600 font-bold">• Atendimento Online 24h</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest italic">© 2026 Sua Estampa Confecção - Todos os direitos reservados</p>
-                <div class="flex gap-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                    <a href="#" class="hover:text-blue-600">Privacidade</a>
-                    <a href="#" class="hover:text-blue-600">Termos</a>
-                </div>
-            </div>
+    <footer class="py-12 bg-slate-900 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-[10px] font-bold text-slate-500 tracking-[0.3em] uppercase mb-4">Sua Estampa Confecção - SJC</p>
+            <p class="text-slate-600 text-[10px]">© 2026 Todos os direitos reservados.</p>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Scripts de Funcionalidade -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        AOS.init({ duration: 1000, once: true });
+
+        // URL do seu Google Apps Script (Coloque aqui após publicar sua planilha)
+        const API_URL = "SUA_URL_AQUI"; 
+
+        async function consultar() {
+            const input = document.getElementById('inputProtocolo');
+            const protocolo = input.value.trim().toUpperCase();
+            const btn = document.getElementById('btnConsultar');
+            const label = document.getElementById('labelBtn');
+            const spinner = document.getElementById('spinner');
+            const card = document.getElementById('statusResult');
+            const error = document.getElementById('errorMsg');
+
+            if (!protocolo) return;
+
+            // Interface em carregamento
+            label.style.display = 'none';
+            spinner.style.display = 'inline-block';
+            error.classList.add('hidden');
+            card.style.display = 'none';
+
+            try {
+                // Se a API_URL não estiver configurada, simulamos um dado para teste
+                if(API_URL === "SUA_URL_AQUI") {
+                    console.warn("API_URL não configurada. Mostrando exemplo estático.");
+                    setTimeout(() => {
+                        alert("Por favor, configure a URL da sua planilha no código (linha 215).");
+                        spinner.style.display = 'none';
+                        label.style.display = 'block';
+                    }, 1000);
+                    return;
+                }
+
+                const response = await fetch(`${API_URL}?protocolo=${protocolo}`);
+                const data = await response.json();
+
+                if (data.encontrado) {
+                    document.getElementById('resNome').innerText = data.nome;
+                    document.getElementById('resId').innerText = protocolo;
+                    document.getElementById('resStatus').innerHTML = `<i class="fas fa-sync animate-spin text-blue-400 mr-2 text-sm"></i> ${data.status}`;
+                    document.getElementById('resPrevisao').innerText = data.previsao;
+                    
+                    card.style.display = 'block';
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    error.classList.remove('hidden');
+                }
+            } catch (err) {
+                error.innerText = "ERRO DE CONEXÃO. TENTE NOVAMENTE.";
+                error.classList.remove('hidden');
+            } finally {
+                label.style.display = 'block';
+                spinner.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
+
 
