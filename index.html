@@ -265,7 +265,7 @@
                 </div>
                 <div class="flex justify-center md:justify-end gap-6">
                     <a href="https://www.facebook.com/suaestampa.oficial" target="_blank" class="text-3xl hover:text-bronze transition-colors"><i class="fab fa-facebook"></i></a>
-                    <a href="https://www.instagram.com/suaestampa.oficial?igsh=MXdvczY5NzlndmYwYw==" target="_blank" class="text-3xl hover:text-bronze transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.instagram.com/suaestampa.oficial" target="_blank" class="text-3xl hover:text-bronze transition-colors"><i class="fab fa-instagram"></i></a>
                     <a href="https://wa.me/5512987106510" target="_blank" class="text-3xl hover:text-bronze transition-colors"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
@@ -280,7 +280,8 @@
     <script>
         AOS.init({ duration: 1000, once: true });
 
-        const API_URL = "SUA_URL_AQUI"; 
+        // URL do Google Apps Script configurada
+        const API_URL = "https://script.google.com/macros/s/AKfycbwS4sEMn4kgfjJkf8zzRk7X0hvnJ2ehHW9-dDJaKchQYys-YZQG-PaNBfJaNXHM7CdgDw/exec"; 
 
         async function consultar() {
             const input = document.getElementById('inputProtocolo');
@@ -299,15 +300,7 @@
             card.style.display = 'none';
 
             try {
-                if(API_URL === "SUA_URL_AQUI") {
-                    setTimeout(() => {
-                        spinner.style.display = 'none';
-                        label.style.display = 'block';
-                        alert("Sistema de rastreio pronto! Configure a URL da planilha para ativar as consultas.");
-                    }, 800);
-                    return;
-                }
-
+                // Chamada para a planilha do Google
                 const response = await fetch(`${API_URL}?protocolo=${protocolo}`);
                 const data = await response.json();
 
@@ -322,7 +315,8 @@
                     error.classList.remove('hidden');
                 }
             } catch (err) {
-                error.innerText = "ERRO DE CONEXÃO.";
+                console.error("Erro de conexão:", err);
+                error.innerText = "ERRO AO CONECTAR COM A PLANILHA.";
                 error.classList.remove('hidden');
             } finally {
                 label.style.display = 'block';
@@ -332,4 +326,3 @@
     </script>
 </body>
 </html>
-
