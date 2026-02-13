@@ -9,41 +9,53 @@
 
 <body class="bg-slate-100 min-h-screen flex items-center justify-center">
 
+<!-- LOGIN -->
 <div id="login-screen" class="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl">
     <h1 class="text-2xl font-bold mb-6 text-center">ERP Sua Estampa</h1>
     <form id="login-form" class="space-y-4">
         <input type="text" id="username" placeholder="Usuário" required class="w-full border p-3 rounded-lg">
         <input type="password" id="password" placeholder="Senha" required class="w-full border p-3 rounded-lg">
-        <button class="w-full bg-indigo-600 text-white p-3 rounded-lg">Entrar</button>
+        <button type="submit" class="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700">
+            Entrar
+        </button>
     </form>
-    <p id="login-error" class="text-red-500 text-sm mt-3 hidden">Login inválido</p>
+    <p id="login-error" class="text-red-500 text-sm mt-3 hidden text-center">
+        Usuário ou senha inválidos
+    </p>
 </div>
 
+<!-- DASHBOARD -->
 <div id="dashboard" class="hidden w-full max-w-6xl p-8">
 
-    <div class="flex justify-between mb-6">
-        <h2 class="text-2xl font-bold">Painel</h2>
-        <button onclick="logout()" class="text-red-500">Sair</button>
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Painel ERP</h2>
+        <button onclick="logout()" class="text-red-500 font-semibold">
+            Sair
+        </button>
     </div>
 
     <!-- NOVO PEDIDO -->
     <div class="bg-white p-6 rounded-xl shadow mb-8">
-        <h3 class="font-bold mb-4">Novo Pedido</h3>
+        <h3 class="font-bold mb-4 text-lg">Cadastrar Novo Pedido</h3>
+
         <form id="order-form" class="grid grid-cols-2 gap-4">
-            <input type="text" id="client" placeholder="Cliente" required class="border p-3 rounded">
-            <input type="text" id="whatsapp" placeholder="WhatsApp" required class="border p-3 rounded">
-            <input type="number" id="total" placeholder="Valor Total" required class="border p-3 rounded">
-            <input type="number" id="deposit" placeholder="Entrada" required class="border p-3 rounded">
-            <input type="date" id="date" required class="border p-3 rounded">
-            <input type="date" id="deadline" required class="border p-3 rounded">
-            <textarea id="items" placeholder="Detalhes" required class="border p-3 rounded col-span-2"></textarea>
-            <button class="bg-indigo-600 text-white p-3 rounded col-span-2">Salvar Pedido</button>
+            <input type="text" id="client" placeholder="Nome do Cliente" required class="border p-3 rounded-lg">
+            <input type="text" id="whatsapp" placeholder="WhatsApp" required class="border p-3 rounded-lg">
+            <input type="number" step="0.01" id="total" placeholder="Valor Total" required class="border p-3 rounded-lg">
+            <input type="number" step="0.01" id="deposit" placeholder="Valor Entrada" required class="border p-3 rounded-lg">
+            <input type="date" id="date" required class="border p-3 rounded-lg">
+            <input type="date" id="deadline" required class="border p-3 rounded-lg">
+            <textarea id="items" placeholder="Detalhes do Pedido" required class="border p-3 rounded-lg col-span-2"></textarea>
+
+            <button type="submit" class="bg-indigo-600 text-white p-3 rounded-lg col-span-2 hover:bg-indigo-700">
+                Salvar Pedido
+            </button>
         </form>
     </div>
 
-    <!-- LISTA DE PEDIDOS -->
+    <!-- LISTAGEM -->
     <div class="bg-white p-6 rounded-xl shadow">
-        <h3 class="font-bold mb-4">Pedidos</h3>
+        <h3 class="font-bold mb-4 text-lg">Pedidos Cadastrados</h3>
         <div id="orders-list"></div>
     </div>
 
@@ -51,24 +63,37 @@
 
 <script>
 
-// ✅ SUA API INSERIDA AQUI
-const API_URL = "https://script.google.com/macros/s/AKfycbyakN-5VGz-Jba2kqkU2C0Kjeq4reAmTiEofasoWJJ9PpS9tMf9qWjB_x_VsCRcrYqa/exec";
+/* ================================
+   CONFIGURAÇÃO DA API
+================================ */
 
-async function apiRequest(data){
+const API_URL = "https://script.google.com/macros/s/AKfycbxLI4w21YL6qQPZnG4xqb2UdCpn79XD4Wti3pLtvS4AACRIRs8mZ4TzfUNZa3lCpuGU/exec";
+
+/* ================================
+   FUNÇÃO BASE DE REQUISIÇÃO
+================================ */
+
+async function apiRequest(payload){
     try{
         const response = await fetch(API_URL,{
             method:"POST",
             headers:{ "Content-Type":"application/json" },
-            body: JSON.stringify(data)
+            body: JSON.stringify(payload)
         });
+
         return await response.json();
-    }catch(err){
+
+    }catch(error){
+        console.error("Erro API:", error);
         alert("Erro de conexão com o servidor.");
-        console.error(err);
     }
 }
 
-document.getElementById("login-form").addEventListener("submit", async(e)=>{
+/* ================================
+   LOGIN
+================================ */
+
+document.getElementById("login-form").addEventListener("submit", async function(e){
     e.preventDefault();
 
     const username = document.getElementById("username").value;
@@ -80,18 +105,22 @@ document.getElementById("login-form").addEventListener("submit", async(e)=>{
         password
     });
 
-    if(result.success){
-        sessionStorage.setItem("user",JSON.stringify(result.user));
-        init();
+    if(result && result.success){
+        sessionStorage.setItem("user", JSON.stringify(result.user));
+        iniciarSistema();
     }else{
         document.getElementById("login-error").classList.remove("hidden");
     }
 });
 
-function init(){
+/* ================================
+   INICIALIZAÇÃO
+================================ */
+
+function iniciarSistema(){
     document.getElementById("login-screen").classList.add("hidden");
     document.getElementById("dashboard").classList.remove("hidden");
-    loadOrders();
+    carregarPedidos();
 }
 
 function logout(){
@@ -99,56 +128,69 @@ function logout(){
     location.reload();
 }
 
-async function loadOrders(){
+/* ================================
+   CARREGAR PEDIDOS
+================================ */
+
+async function carregarPedidos(){
     const result = await apiRequest({ action:"getOrders" });
 
     const container = document.getElementById("orders-list");
-    container.innerHTML="";
+    container.innerHTML = "";
 
-    if(!result.orders || result.orders.length === 0){
+    if(!result || !result.orders || result.orders.length === 0){
         container.innerHTML = "<p class='text-gray-400'>Nenhum pedido cadastrado.</p>";
         return;
     }
 
-    result.orders.forEach(o=>{
+    result.orders.forEach(order=>{
         container.innerHTML += `
             <div class="border p-4 mb-3 rounded-lg">
-                <p><strong>${o.client}</strong> - R$ ${o.total}</p>
-                <p>Status: ${o.status}</p>
+                <p class="font-semibold">${order.client}</p>
+                <p>Valor: R$ ${order.total}</p>
+                <p>Status: ${order.status}</p>
             </div>
         `;
     });
 }
 
-document.getElementById("order-form").addEventListener("submit", async(e)=>{
+/* ================================
+   NOVO PEDIDO
+================================ */
+
+document.getElementById("order-form").addEventListener("submit", async function(e){
     e.preventDefault();
 
     const total = parseFloat(document.getElementById("total").value);
     const deposit = parseFloat(document.getElementById("deposit").value);
 
-    const data = {
+    await apiRequest({
         action:"addOrder",
         client:document.getElementById("client").value,
         whatsapp:document.getElementById("whatsapp").value,
         items:document.getElementById("items").value,
         total: total,
         deposit: deposit,
-        balance:(total - deposit),
+        balance: (total - deposit),
         date:document.getElementById("date").value,
         deadline:document.getElementById("deadline").value
-    };
+    });
 
-    await apiRequest(data);
-    loadOrders();
     e.target.reset();
+    carregarPedidos();
 });
+
+/* ================================
+   AUTO LOGIN
+================================ */
 
 window.addEventListener("load",()=>{
     if(sessionStorage.getItem("user")){
-        init();
+        iniciarSistema();
     }
 });
 
 </script>
+
 </body>
 </html>
