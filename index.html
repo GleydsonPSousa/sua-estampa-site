@@ -3,326 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sua Estampa Confecção | Oficial SJC</title>
-    <!-- Tailwind CSS -->
+    <title>Sua Estampa Confecção - ERP Cloud</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Fontes e Ícones -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
-        
-        :root { 
-            --navy: #0f1e36; 
-            --bronze: #c2814b;
-            --bronze-light: #e0a370;
-            scroll-behavior: smooth; 
-        }
-        
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #fcfaf8; 
-            overflow-x: hidden;
-        }
-        
-        .glass {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            border-bottom: 2px solid var(--bronze);
-        }
-
-        .text-gradient-brand {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--bronze) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .bg-navy { background-color: var(--navy); }
-        .bg-bronze { background-color: var(--bronze); }
-        .text-navy { color: var(--navy); }
-        .text-bronze { color: var(--bronze); }
-
-        .btn-brand {
-            background-color: var(--navy);
-            color: white;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-        }
-
-        .btn-brand:hover {
-            background-color: transparent;
-            color: var(--navy);
-            border-color: var(--navy);
-            transform: translateY(-2px);
-        }
-
-        .btn-bronze {
-            background-color: var(--bronze);
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-        .btn-bronze:hover {
-            background-color: #a66d3e;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(194, 129, 75, 0.4);
-        }
-
-        .status-card {
-            display: none;
-            animation: slideUp 0.5s ease-out forwards;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .loader {
-            width: 20px;
-            height: 20px;
-            border: 3px solid #FFF;
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            display: none;
-            animation: rotation 1s linear infinite;
-        }
-
-        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #25d366;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-            background-color: #128c7e;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        .card { background: white; border-radius: 1rem; border: 1px solid #e2e8f0; }
+        .btn-primary { background: #0f172a; color: white; transition: all 0.2s; }
+        .hidden-section { display: none !important; }
+        .nav-link-active { background-color: #f0f4ff; color: #4f46e5; border-bottom: 2px solid #4f46e5; }
+        #loading-overlay { display: none; }
+        #loading-overlay.active { display: flex; }
     </style>
 </head>
-<body>
+<body class="antialiased text-slate-900">
 
-    <!-- Botão Flutuante WhatsApp -->
-    <a href="https://wa.me/5512987106510" target="_blank" class="whatsapp-float">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    <div id="loading-overlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100] items-center justify-center flex-col text-white">
+        <div class="w-12 h-12 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p id="loading-text" class="font-bold tracking-widest uppercase text-xs text-center">Sincronizando...</p>
+    </div>
 
-    <!-- Header -->
-    <nav class="fixed w-full z-[100] glass py-3">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="relative w-12 h-12 bg-navy rounded-full border-2 border-bronze flex items-center justify-center overflow-hidden">
-                    <span class="text-bronze font-serif text-xl" style="font-family: 'Times New Roman', serif;">S</span>
-                </div>
-                <div class="flex flex-col">
-                    <span class="text-lg font-extrabold text-navy leading-none uppercase">Sua Estampa</span>
-                    <span class="text-[9px] font-bold text-bronze tracking-[0.2em] uppercase">Confecção & Estamparia</span>
-                </div>
+    <!-- Tela de Login -->
+    <div id="login-screen" class="min-h-screen flex items-center justify-center p-4 bg-slate-50">
+        <div class="max-w-md w-full">
+            <div class="text-center mb-8">
+                <div class="inline-flex w-14 h-14 bg-indigo-600 rounded-2xl items-center justify-center text-white font-bold text-3xl mb-4 shadow-xl">S</div>
+                <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Sua Estampa Cloud</h1>
+                <p class="text-slate-500 text-sm">Validando acesso via Planilha Google</p>
             </div>
-            <a href="https://wa.me/5512987106510" target="_blank" class="bg-navy text-white px-5 py-2.5 rounded-full text-xs font-bold btn-brand shadow-lg">
-                ORÇAMENTO <i class="fab fa-whatsapp ml-1"></i>
-            </a>
-        </div>
-    </nav>
-
-    <!-- Hero -->
-    <section class="pt-40 pb-24 px-6 relative overflow-hidden">
-        <div class="absolute -top-24 -right-24 w-96 h-96 bg-bronze opacity-5 rounded-full blur-3xl"></div>
-        <div class="container mx-auto text-center relative z-10">
-            <div data-aos="fade-down" class="inline-flex items-center gap-2 bg-stone-100 text-stone-600 px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest mb-8 border border-stone-200">
-                <i class="fas fa-certificate text-bronze"></i>
-                Estamparia Profissional em SJC
-            </div>
-            
-            <h1 data-aos="fade-up" class="text-5xl md:text-7xl font-extrabold text-navy mb-6 leading-tight tracking-tighter">
-                Sua marca, <br><span class="text-gradient-brand">nossa estampa.</span>
-            </h1>
-            
-            <p data-aos="fade-up" data-aos-delay="100" class="text-slate-600 text-base md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
-                Alta qualidade em DTF, Silk e Uniformes Corporativos. Do design à entrega final, cuidamos de cada detalhe.
-            </p>
-
-            <div data-aos="fade-up" data-aos-delay="200" class="flex flex-col sm:flex-row justify-center gap-5">
-                <a href="#rastreio" class="btn-bronze px-10 py-5 rounded-full font-extrabold text-lg shadow-xl text-center">Acompanhar Pedido</a>
-                <a href="https://wa.me/5512987106510" target="_blank" class="bg-white text-navy border-2 border-navy px-10 py-5 rounded-full font-extrabold text-lg hover:bg-slate-50 transition-all text-center">WhatsApp Oficial</a>
+            <div class="card p-8 shadow-2xl">
+                <form id="login-form" class="space-y-5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-1.5 tracking-wider">Usuário (na Planilha)</label>
+                        <input type="text" id="username" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-indigo-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-1.5 tracking-wider">Senha</label>
+                        <input type="password" id="password" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-indigo-500 outline-none">
+                    </div>
+                    <div id="login-error" class="hidden text-rose-500 text-xs font-bold bg-rose-50 p-3 rounded-lg border border-rose-100 text-center italic">Usuário ou Senha incorretos na nuvem.</div>
+                    <button type="submit" class="w-full btn-primary font-bold py-3.5 rounded-xl">Entrar no Sistema</button>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Rastreio -->
-    <section id="rastreio" class="py-24 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto bg-navy rounded-[3rem] p-8 md:p-16 border border-bronze/30 shadow-2xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-10 opacity-10">
-                    <i class="fas fa-box-open text-9xl text-white"></i>
+    <!-- Interface Principal -->
+    <div id="main-dashboard" class="hidden-section">
+        <nav class="bg-white border-b border-slate-200 px-6 py-2 sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div class="flex items-center gap-8">
+                    <span class="text-lg font-bold text-slate-800">Sua Estampa</span>
+                    <div class="flex gap-1 h-full">
+                        <button onclick="switchTab('finance')" id="tab-btn-finance" class="px-5 py-4 text-sm font-bold nav-link-active">Financeiro</button>
+                        <button onclick="switchTab('orders')" id="tab-btn-orders" class="px-5 py-4 text-sm font-bold text-slate-500">Produção</button>
+                    </div>
                 </div>
+                <button onclick="logout()" class="text-xs font-bold text-rose-500 px-3 py-2">Sair</button>
+            </div>
+        </nav>
 
-                <div class="relative z-10">
-                    <div class="text-center md:text-left mb-12">
-                        <h2 class="text-3xl font-extrabold text-white mb-3">Status da Produção</h2>
-                        <p class="text-bronze font-bold text-sm uppercase tracking-widest">Acompanhe seu pedido em tempo real</p>
+        <main id="section-finance" class="max-w-7xl mx-auto px-6 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="card p-6 border-b-4 border-b-emerald-400">
+                    <p class="text-[10px] font-black uppercase text-slate-400 mb-1">Entradas</p>
+                    <h3 id="stat-income" class="text-2xl font-bold">R$ 0,00</h3>
+                </div>
+                <div class="card p-6 border-b-4 border-b-rose-400">
+                    <p class="text-[10px] font-black uppercase text-slate-400 mb-1">Saídas</p>
+                    <h3 id="stat-expense" class="text-2xl font-bold">R$ 0,00</h3>
+                </div>
+                <div class="card p-6 border-b-4 border-b-indigo-400">
+                    <p class="text-[10px] font-black uppercase text-slate-400 mb-1">Saldo Atual</p>
+                    <h3 id="stat-balance" class="text-2xl font-bold">R$ 0,00</h3>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-4">
+                    <div class="card p-6">
+                        <h2 class="font-bold mb-4">Lançar Despesa</h2>
+                        <form id="finance-form" class="space-y-4">
+                            <input type="text" id="fin-desc" required placeholder="Descrição" class="w-full px-4 py-3 border rounded-xl outline-none">
+                            <input type="number" step="0.01" id="fin-amount" required placeholder="Valor R$" class="w-full px-4 py-3 border rounded-xl outline-none">
+                            <input type="date" id="fin-date" required class="w-full px-4 py-3 border rounded-xl">
+                            <button type="submit" class="w-full bg-rose-500 text-white font-bold py-3 rounded-xl uppercase text-xs tracking-widest">Registrar Saída</button>
+                        </form>
                     </div>
-
-                    <div class="flex flex-col md:flex-row gap-4 bg-white/10 p-3 rounded-[2rem] border border-white/20 mb-8">
-                        <div class="flex-1 flex items-center px-6 py-3">
-                            <i class="fas fa-barcode text-bronze mr-4 text-xl"></i>
-                            <input type="text" id="inputProtocolo" placeholder="SEU PROTOCOLO" 
-                                   class="w-full bg-transparent outline-none font-bold text-white placeholder:text-white/30 uppercase text-lg">
-                        </div>
-                        <button onclick="consultar()" id="btnConsultar" class="btn-bronze px-12 py-5 rounded-[1.5rem] font-black text-sm flex items-center justify-center gap-3">
-                            <span id="labelBtn">BUSCAR</span>
-                            <div id="spinner" class="loader"></div>
-                        </button>
-                    </div>
-                    
-                    <p id="errorMsg" class="text-red-400 text-xs font-bold hidden mb-6 text-center md:text-left"><i class="fas fa-times-circle mr-2"></i> Código não encontrado. Fale connosco se tiver dúvidas.</p>
-
-                    <!-- Resultado -->
-                    <div id="statusResult" class="status-card bg-white rounded-[2rem] p-8 md:p-10 shadow-inner">
-                        <div class="flex flex-wrap justify-between items-end gap-6 border-b border-stone-100 pb-8 mb-8">
-                            <div>
-                                <p class="text-[10px] font-black text-bronze uppercase mb-2 tracking-widest">Cliente</p>
-                                <h3 id="resNome" class="text-3xl font-black text-navy uppercase">---</h3>
-                            </div>
-                            <div class="px-5 py-2 bg-navy text-white rounded-full text-xs font-bold" id="resId">---</div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div class="space-y-1">
-                                <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Produção</span>
-                                <div class="flex items-center gap-4">
-                                    <div class="w-12 h-12 bg-bronze/10 text-bronze rounded-xl flex items-center justify-center">
-                                        <i class="fas fa-industry"></i>
-                                    </div>
-                                    <p id="resStatus" class="text-navy font-black text-xl">---</p>
-                                </div>
-                            </div>
-                            <div class="space-y-1">
-                                <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Data Estimada</span>
-                                <div class="flex items-center gap-4">
-                                    <div class="w-12 h-12 bg-navy/5 text-navy rounded-xl flex items-center justify-center">
-                                        <i class="fas fa-calendar-check"></i>
-                                    </div>
-                                    <p id="resPrevisao" class="text-navy font-black text-xl">---</p>
-                                </div>
-                            </div>
-                        </div>
+                </div>
+                <div class="lg:col-span-8">
+                    <div class="card overflow-hidden">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-50">
+                                <tr>
+                                    <th class="p-4">Descrição</th>
+                                    <th class="p-4 text-right">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fin-table" class="divide-y divide-slate-100"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </main>
 
-    <!-- Serviços -->
-    <section id="servicos" class="py-24 bg-stone-50">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-black text-navy mb-16 text-center">Soluções em Estamparia</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div class="bg-white p-10 rounded-[3rem] shadow-sm border border-stone-100">
-                    <i class="fas fa-print text-3xl text-bronze mb-6"></i>
-                    <h3 class="font-bold text-navy text-xl mb-4">DTF de Alta Definição</h3>
-                    <p class="text-slate-500 text-sm">Cores vibrantes e detalhes precisos em qualquer tipo de tecido.</p>
-                </div>
-                <div class="bg-white p-10 rounded-[3rem] shadow-sm border border-stone-100">
-                    <i class="fas fa-layer-group text-3xl text-bronze mb-6"></i>
-                    <h3 class="font-bold text-navy text-xl mb-4">Silk Screen Profissional</h3>
-                    <p class="text-slate-500 text-sm">Durabilidade extrema para uniformes e eventos de larga escala.</p>
-                </div>
-                <div class="bg-white p-10 rounded-[3rem] shadow-sm border border-stone-100">
-                    <i class="fas fa-user-tie text-3xl text-bronze mb-6"></i>
-                    <h3 class="font-bold text-navy text-xl mb-4">Uniformes Corporativos</h3>
-                    <p class="text-slate-500 text-sm">Identidade visual completa para a sua equipa com tecidos premium.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        <main id="section-orders" class="max-w-7xl mx-auto px-6 py-8 hidden-section">
+            <div id="order-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </main>
+    </div>
 
-    <!-- Footer -->
-    <footer class="py-20 bg-navy text-white">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
-                <div class="text-center md:text-left">
-                    <div class="text-2xl font-black mb-2">SUA ESTAMPA</div>
-                    <p class="text-bronze text-[10px] font-bold uppercase tracking-widest">Excelência em São José dos Campos</p>
-                </div>
-                <div class="text-center">
-                    <h4 class="text-xs font-bold uppercase text-white/40 mb-4 tracking-widest">Contacto</h4>
-                    <p class="text-sm font-bold mb-2"><i class="fab fa-whatsapp text-bronze mr-2"></i> (12) 98710-6510</p>
-                    <p class="text-sm font-bold"><i class="fas fa-envelope text-bronze mr-2"></i> suaestampa.oficial@gmail.com</p>
-                </div>
-                <div class="flex justify-center md:justify-end gap-6">
-                    <a href="https://www.facebook.com/suaestampa.oficial" target="_blank" class="text-3xl hover:text-bronze transition-colors"><i class="fab fa-facebook"></i></a>
-                    <a href="https://www.instagram.com/suaestampa.oficial" target="_blank" class="text-3xl hover:text-bronze transition-colors"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/5512987106510" target="_blank" class="text-3xl hover:text-bronze transition-colors"><i class="fab fa-whatsapp"></i></a>
-                </div>
-            </div>
-            <div class="pt-8 border-t border-white/5 text-center">
-                <p class="text-white/20 text-[9px] font-bold uppercase tracking-widest">© 2026 Sua Estampa Oficial - Todos os direitos reservados.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: true });
+        /**
+         * CONFIGURAÇÃO: Insira a URL do seu AppScript aqui
+         */
+        const SCRIPT_URL = ""; 
 
-        // URL do Google Apps Script configurada
-        const API_URL = "https://script.google.com/macros/s/AKfycbwS4sEMn4kgfjJkf8zzRk7X0hvnJ2ehHW9-dDJaKchQYys-YZQG-PaNBfJaNXHM7CdgDw/exec"; 
+        let financeData = [];
+        let ordersData = [];
 
-        async function consultar() {
-            const input = document.getElementById('inputProtocolo');
-            const protocolo = input.value.trim().toUpperCase();
-            const btn = document.getElementById('btnConsultar');
-            const label = document.getElementById('labelBtn');
-            const spinner = document.getElementById('spinner');
-            const card = document.getElementById('statusResult');
-            const error = document.getElementById('errorMsg');
+        // --- AUTH CLOUD ---
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
 
-            if (!protocolo) return;
+            if(!SCRIPT_URL) {
+                alert("ERRO: SCRIPT_URL não definida no código.");
+                return;
+            }
 
-            label.style.display = 'none';
-            spinner.style.display = 'inline-block';
-            error.classList.add('hidden');
-            card.style.display = 'none';
-
+            setLoading(true, "Autenticando na Nuvem...");
             try {
-                // Chamada para a planilha do Google
-                const response = await fetch(`${API_URL}?protocolo=${protocolo}`);
-                const data = await response.json();
+                const response = await fetch(`${SCRIPT_URL}?action=login&user=${user}&pass=${pass}`);
+                const result = await response.json();
 
-                if (data.encontrado) {
-                    document.getElementById('resNome').innerText = data.nome;
-                    document.getElementById('resId').innerText = `OS: ${protocolo}`;
-                    document.getElementById('resStatus').innerText = data.status;
-                    document.getElementById('resPrevisao').innerText = data.previsao;
-                    card.style.display = 'block';
-                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if(result.success) {
+                    sessionStorage.setItem('sua_estampa_auth', 'true');
+                    initApp();
                 } else {
-                    error.classList.remove('hidden');
+                    document.getElementById('login-error').classList.remove('hidden');
                 }
             } catch (err) {
-                console.error("Erro de conexão:", err);
-                error.innerText = "ERRO AO CONECTAR COM A PLANILHA.";
-                error.classList.remove('hidden');
+                console.error(err);
+                alert("Erro ao conectar com o servidor do Google.");
             } finally {
-                label.style.display = 'block';
-                spinner.style.display = 'none';
+                setLoading(false);
+            }
+        });
+
+        async function initApp() {
+            document.getElementById('login-screen').classList.add('hidden-section');
+            document.getElementById('main-dashboard').classList.remove('hidden-section');
+            await fetchData();
+        }
+
+        async function fetchData() {
+            setLoading(true, "Lendo Planilha...");
+            try {
+                const response = await fetch(SCRIPT_URL);
+                const data = await response.json();
+                financeData = data.finance || [];
+                ordersData = data.orders || [];
+                renderAll();
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
             }
         }
+
+        function renderAll() {
+            const table = document.getElementById('fin-table');
+            table.innerHTML = '';
+            let inc = 0, exp = 0;
+
+            financeData.forEach(item => {
+                const val = parseFloat(item.amount);
+                if(item.type === 'income') inc += val; else exp += val;
+                table.innerHTML += `
+                    <tr>
+                        <td class="p-4"><div class="font-bold">${item.desc}</div><div class="text-[10px] text-slate-400">${item.date}</div></td>
+                        <td class="p-4 text-right font-bold ${item.type === 'income' ? 'text-emerald-600' : 'text-rose-500'}">R$ ${val.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('stat-income').innerText = `R$ ${inc.toFixed(2)}`;
+            document.getElementById('stat-expense').innerText = `R$ ${exp.toFixed(2)}`;
+            document.getElementById('stat-balance').innerText = `R$ ${(inc - exp).toFixed(2)}`;
+
+            const grid = document.getElementById('order-grid');
+            grid.innerHTML = '';
+            ordersData.filter(o => o.status !== 'concluido').forEach(o => {
+                grid.innerHTML += `
+                    <div class="card p-6 border-l-4 ${o.status === 'pendente' ? 'border-amber-400' : 'border-indigo-500'}">
+                        <h4 class="font-bold uppercase mb-2">${o.client}</h4>
+                        <p class="text-xs text-slate-500 mb-4">${o.items}</p>
+                        <div class="flex justify-between text-[10px] font-bold">
+                            <span>Falta: R$ ${parseFloat(o.balance).toFixed(2)}</span>
+                            <span>Prazo: ${o.deadline}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function setLoading(show, text = "") {
+            const overlay = document.getElementById('loading-overlay');
+            if(text) document.getElementById('loading-text').innerText = text;
+            overlay.classList.toggle('active', show);
+        }
+
+        function switchTab(tab) {
+            document.getElementById('section-finance').classList.toggle('hidden-section', tab !== 'finance');
+            document.getElementById('section-orders').classList.toggle('hidden-section', tab !== 'orders');
+            document.getElementById('tab-btn-finance').classList.toggle('nav-link-active', tab === 'finance');
+            document.getElementById('tab-btn-orders').classList.toggle('nav-link-active', tab === 'orders');
+        }
+
+        function logout() { sessionStorage.clear(); location.reload(); }
+        if(sessionStorage.getItem('sua_estampa_auth')) initApp();
     </script>
 </body>
 </html>
+
